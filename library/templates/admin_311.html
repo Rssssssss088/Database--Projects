@@ -1,0 +1,59 @@
+{% extends "global_layout.html" %}
+
+{% block content %}
+    <h1>311</h1><br>
+    <form class="form-horizontal" name="student-form" method="POST" >
+        <!-- hidden_tag returns the form's security metadata -->
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+            {{ form.date.label(class="form-label sr-only") }}
+            <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+            {{ form.date(class="form-control", required=False) }}
+            <div class="input-group-append">
+            </div>
+            {% if form.date.errors %}
+                <ul class="errors">
+                    {% for error in form.date.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+                    {{ form.search(class="btn btn-primary") }}
+
+    </form>
+    <div class="container">
+        <div class="row" id="row">
+            <div class="col-md-12">
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                        {% if results|length == 0 %}
+                            <h1 style="margin-top: 5rem;">No Rentals in Library® Made Yet!</h1>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>School ID</th>
+                                            <th>School Name</th>
+                                            <th>Total Rentals</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for result in results %}
+                                            <tr>
+                                                <td>{{ result.school_id }}</td>
+                                                <td>{{ result.school_name }}</td>
+                                                <td>{{ result.total_rentals }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
