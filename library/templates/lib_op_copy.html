@@ -1,0 +1,43 @@
+{% extends "global_layout.html" %}
+{% block content %}
+    <h1>Insert Copy</h1>
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="student-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="school_id" value="{{ school_id }}">
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.isbn.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.isbn(class = "form-control", placeholder = "Enter ISBN", required = True) }}
+                    {% if form.isbn.errors %}
+                    <ul class = "errors">
+                        {% for error in form.isbn.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.copy_id.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.copy_id(class = "form-control", placeholder = "Enter Copy ID", required = True) }}
+                    {% if form.copy_id.errors %}
+                    <ul class = "errors">
+                        {% for error in form.copy_id.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+         {{ form.submit(class = "btn btn-primary") }}
+            </form>
+    </div>
+    </div>
+</div>
+
+
+{% endblock content %}

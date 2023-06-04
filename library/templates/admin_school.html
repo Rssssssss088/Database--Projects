@@ -1,0 +1,94 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+<h1>Schools</h1>
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if schools|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Schools made yet!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>School ID</th>
+                                    <th>School Name</th>
+                                    <th>City</th>
+                                    <th>Street Name</th>
+                                    <th>Street Number</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Principal First Name</th>
+                                    <th>Principal Middle Name</th>
+                                    <th>Principal Last Name</th>
+                                    <th>Operator First Name</th>
+                                    <th>Operator Last Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for school in schools %}
+                                    <tr>
+                                        <td> {{ school.school_id }} </td>
+                                        <td> {{ school.school_name }} </td>
+                                        <td> {{ school.city }}</td>
+                                        <td> {{ school.street_name }} </td>
+                                        <td> {{ school.street_num }} </td>
+                                        <td> {{ school.phone }} </td>
+                                        <td> {{ school.email }} </td>
+                                        <td> {{ school.principal_first_name }} </td>
+                                        <td> {{ school.principal_mid_name }} </td>
+                                        <td> {{ school.principal_last_name }} </td>
+                                        <td>{{ school.first_name }}</td>
+                                        <td>{{ school.last_name }}</td>
+
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-school_id = "{{ school.school_id }}" data-username = "{{ username }}"onclick = "setModalFields(this)">
+                                                <i class = "fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete School</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("modal-form").action = "/admin/school/delete/" + row.getAttribute("data-username") + '/' + row.getAttribute("data-school_id");
+        document.getElementById("modal-form").method = "POST";
+    }
+</script>
+
+{% endblock content %}

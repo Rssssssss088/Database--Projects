@@ -1,0 +1,203 @@
+{% extends "global_layout.html" %}
+{% block content %}
+    <div><h1>Salute Operator {{ credentials.first_name }} {{ credentials.last_name }}!</h1></div>
+
+    <div class="container" id="row-container">
+        <div class="row" id="row">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Make a Rental</h4>
+                        <p class="card-text paragraph-custom">
+                            A registered user just asked you to rent a book!
+                        </p>
+                        <form  action="/lib_op/rental/make/{{ credentials.school_id }}/{{ credentials.username }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                            <input type="hidden" name="lib_op" value="{{ credentials.lib_op }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Fulfil a Reservation</h4>
+                        <p class="card-text">
+                    A registered user just asked you honor their reservation!                        </p>
+                        <form  action="/lib_op/rental/fulfil-reservation/{{ credentials.school_id }}/{{ credentials.username }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="row-2">
+        <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Return a Rental</h4>
+                        <p class="card-text paragraph-custom">
+                            A registered user just asked you to return a book!
+                        </p>
+                        <form  action="/lib_op/rental/return/{{ credentials.school_id }}/{{ credentials.username }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                            <input type="hidden" name="lib_op" value="{{ credentials.lib_op }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Approve a User</h4>
+                        <p class="card-text">
+                            Fulfil your weakly duties by approving, disapproving or deleting users gaining access to the privileges of Library®!
+                        </p>
+                                                  <form action="/lib_op/user/{{ credentials.school_id }}/{{ credentials.username }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                             <input type="hidden" name="username" value="{{ credentials.username }}">
+                                                      <button class="btn btn-primary" type="submit">Go!</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row" id="row-2">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Approve a Review</h4>
+                        <p class="card-text">
+                            Fulfil your weakly duties by approving, disapproving or deleting reviews of our Library® books!
+                        </p>
+                         <form action="/reviews/{{ credentials.school_id }}/{{ credentials.username }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                             <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Insert a Book</h4>
+                    <p class="card-text">
+                        Insert and update the books in your school's library!
+                    </p>
+                         <form action="/book/create/{{ credentials.username }}">
+                             <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row" id="row-2">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">View Reservations</h4>
+                        <p class="card-text">
+View all of Library®                        </p>
+                         <form action="/lib_op/reservations/{{ credentials.school_id }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                            <button class="btn btn-primary" type="submit">Reservations</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">View Rentals</h4>
+                        <p class="card-text">
+View all of your schools                       </p>
+                         <form action="/lib_op/rentals/{{ credentials.school_id }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                            <button class="btn btn-primary" type="submit">Rentals</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="row" id="row-2">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Insert a Copy</h4>
+                        <p class="card-text">
+                        Insert and update the copies of Library® books in your school's library!</p>
+                         <form action="/copy/create/{{ credentials.school_id }}">
+                            <input type="hidden" name="school_id" value="{{ credentials.school_id }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                     <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Use Library®</h4>
+                        <p class="card-text">
+Access your common-mortal privileges of Library®!                         </p>
+                         <form action="/user/{{ credentials }}">
+                            <input type="hidden" name="credentials" value="{{ credentials }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    <div class="row" id="row-2">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Review Stats</h4>
+                        <p class="card-text">
+                        Check out stats for the reviews of Library® books
+                        </p>
+                         <form action="/lib_op/review/stats/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                     <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Black List</h4>
+                        <p class="card-text">
+List of the users that abuse Library® priviledges </p>
+                         <form action="/lib_op/rentals/black-list/{{ credentials.school_id }}">
+                            <input type="hidden" name="credentials" value="{{ credentials.school_id }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                       <div class="row" id="row-2">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">View Library®</h4>
+                        <p class="card-text">
+                        Check out all of Library® books
+                        </p>
+                         <form action="/lib_op/books/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                       </div>
+
+
+    </div>
+{% endblock content %}

@@ -1,0 +1,263 @@
+{% extends "global_layout.html" %}
+
+{% block content %}
+    <h1>Available books for {{ username }}</h1><br>
+    <form class="form-horizontal" name="student-form" method="POST" >
+        <!-- hidden_tag returns the form's security metadata -->
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+            {{ form.term.label(class="form-label sr-only") }}
+            <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+            {{ form.term(class="form-control", placeholder="Search in: Titles, Categories, Authors", required=False) }}
+            <div class="input-group-append">
+                {{ form.search(class="btn btn-primary") }}
+            </div>
+            {% if form.term.errors %}
+                <ul class="errors">
+                    {% for error in form.term.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </form>
+
+    <div class="orient">
+        {% for book in books %}
+            <div id="sreppas_box" onclick="showModal('{{ book.isbn }}', '{{ book.pages }}', '{{ book.authors }}', '{{ book.categories }}', '{{ book.keywords }}', '{{ book.publisher }}', '{{ book.language }}', '{{ book.summary }}', '{{ book.title }}', '{{book.availability}}')"
+                 style="background-color: #664d03;">
+            <img src="{{ book.image }}" style=" width: 80%;
+                                                height: 80%;
+                                                margin-left: auto;
+                                                margin-right: auto;
+                                                 ">
+                <div class="book-title">
+                {{ book.title }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="bookTitle"></h2>
+            <ul id="bookDetails"></ul>
+            <div style="display: flex; justify-content: space-around">
+            <form id="reserveForm" action="/reservation" method="POST">
+                <input type="hidden" id="isbnInput" name="isbn">
+                <input type="hidden" id="usernameInput" name="username">
+                <button type="submit" class="btn btn-primary">Reserve</button>
+            </form>
+             <form id="reviewForm" action="/review" method="POST">
+                <input type="hidden" id="isbnInput" name="isbn">
+                <input type="hidden" id="usernameInput" name="username">
+                <button type="submit" class="btn btn-primary">Review</button>
+            </form>
+                <form id="reviewshowForm" action="/review/show" method="POST">
+                <input type="hidden" id="isbnInput" name="isbn">
+                    <input type="hidden" id="usernameInput" name="username">
+                <button type="submit" class="btn btn-primary">Show Reviews</button>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row" id="row">
+            <div class="col-md-12">
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                        {% if books|length == 0 %}
+                            <h1 style="margin-top: 5rem;">No Books in the School Library Available!</h1>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ISBN</th>
+                                            <th>Title</th>
+                                            <th>Category</th>
+                                            <th>Authors</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for book in books %}
+                                            <tr>
+                                                <td>{{ book.isbn }}</td>
+                                                <td>{{ book.title }}</td>
+                                                <td>{{ book.categories }}</td>
+                                                <td>{{ book.authors }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // Function to display the modal with book details
+    function showModal(isbn, pages, authors, categories, keywords, publisher, language, summary, title, availability) {
+        var modal = document.getElementById("myModal");
+        var bookTitle = document.getElementById("bookTitle");
+        var bookDetails = document.getElementById("bookDetails");
+        var reserveForm = document.getElementById("reserveForm");
+        var reviewForm = document.getElementById("reviewForm");
+        var reviewshowForm = document.getElementById("reviewshowForm");
+        var isbnInput = document.getElementById("isbnInput");
+        var usernameInput = document.getElementById("usernameInput");
+
+        // Set the book title
+        bookTitle.textContent = title;
+
+        // Clear any existing details
+        bookDetails.innerHTML = "";
+
+        // Create list items for book details
+        var isbnItem = document.createElement("li");
+        isbnItem.innerHTML = "<h5>ISBN: </h5>" + isbn + "<br><br>";
+        bookDetails.appendChild(isbnItem);
+
+        var authorsItem = document.createElement("li");
+        authorsItem.innerHTML = "<h5>Authors: </h5>" + authors + "<br><br>";
+        bookDetails.appendChild(authorsItem);
+
+        var categoriesItem = document.createElement("li");
+        categoriesItem.innerHTML = "<h5>Categories: </h5>" + categories + "<br><br>";
+        bookDetails.appendChild(categoriesItem);
+
+        var publishersItem = document.createElement("li");
+        publishersItem.innerHTML = "<h5>Publisher: </h5>" + publisher + "<br><br>";
+        bookDetails.appendChild(publishersItem);
+
+        var pagesItem = document.createElement("li");
+        pagesItem.innerHTML = "<h5>Pages: </h5>" + pages +"<br><br>";
+        bookDetails.appendChild(pagesItem);
+
+        var languageItem = document.createElement("li");
+        languageItem.innerHTML = "<h5>Language: </h5>" + language + "<br><br>";
+        bookDetails.appendChild(languageItem);
+
+        var keywordsItem = document.createElement("li");
+        keywordsItem.innerHTML = "<h5>Keywords: </h5>" + keywords + "<br><br>";
+        bookDetails.appendChild(keywordsItem);
+
+
+        var summaryItem = document.createElement("li");
+        summaryItem.innerHTML = "<h5>Summary: </h5>" + summary + "<br><br>";
+        bookDetails.appendChild(summaryItem);
+
+        // Set the values for the hidden input fields in the reserve form
+        isbnInput.value = isbn;
+        usernameInput.value = "{{ username }}";
+
+        // Show the modal
+        modal.style.display = "block";
+    }
+
+    // Close the modal when the close button is clicked
+    var closeBtn = document.getElementsByClassName("close")[0];
+    closeBtn.onclick = function() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    // Handle the reserve button click event// Handle the reserve button click event
+var reserveForm = document.getElementById("reserveForm");
+reserveForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    // Get the values of the hidden input fields
+    var isbn = document.getElementById("isbnInput").value;
+    var username = document.getElementById("usernameInput").value;
+
+    // Create a new form element
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/reservations/' + encodeURIComponent(username) + '/' + encodeURIComponent(isbn);
+
+    // Create input fields for the data to be sent
+    var usernameInput = document.createElement('input');
+    usernameInput.type = 'hidden';
+    usernameInput.name = 'username';
+    usernameInput.value = username;
+    form.appendChild(usernameInput);
+
+    var isbnInput = document.createElement('input');
+    isbnInput.type = 'hidden';
+    isbnInput.name = 'isbn';
+    isbnInput.value = isbn;
+    form.appendChild(isbnInput);
+
+    // Append the form to the document and submit it
+    document.body.appendChild(form);
+    form.submit();
+});
+       var reviewForm = document.getElementById("reviewForm");
+reviewForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    // Get the values of the hidden input fields
+    var isbn = document.getElementById("isbnInput").value;
+    var username = document.getElementById("usernameInput").value;
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/review/create/' + encodeURIComponent(username) + '/' + encodeURIComponent(isbn);
+
+    // Create input fields for the data to be sent
+    var usernameInput = document.createElement('input');
+    usernameInput.type = 'hidden';
+    usernameInput.name = 'username';
+    usernameInput.value = username;
+    form.appendChild(usernameInput);
+
+    var isbnInput = document.createElement('input');
+    isbnInput.type = 'hidden';
+    isbnInput.name = 'isbn';
+    isbnInput.value = isbn;
+    form.appendChild(isbnInput);
+
+    // Append the form to the document and submit it
+    document.body.appendChild(form);
+    form.submit();
+});
+
+
+ var reviewshowForm = document.getElementById("reviewshowForm");
+reviewshowForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    // Get the values of the hidden input fields
+    var isbn = document.getElementById("isbnInput").value;
+    var username = document.getElementById("usernameInput").value;
+
+    var form = document.createElement('form');
+    form.method = 'GET';
+    form.action = '/reviews/show/' + encodeURIComponent(username) + '/' + encodeURIComponent(isbn);
+
+    // Create input fields for the data to be sent
+    var usernameInput = document.createElement('input');
+    usernameInput.type = 'hidden';
+    usernameInput.name = 'username';
+    usernameInput.value = username;
+    form.appendChild(usernameInput);
+
+    var isbnInput = document.createElement('input');
+    isbnInput.type = 'hidden';
+    isbnInput.name = 'isbn';
+    isbnInput.value = isbn;
+    form.appendChild(isbnInput);
+
+    // Append the form to the document and submit it
+    document.body.appendChild(form);
+    form.submit();
+});
+
+</script>
+
+{% endblock content %}

@@ -1,0 +1,173 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="student-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.username.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.username(class = "form-control", placeholder = "Enter Username", required = False) }}
+                    {% if form.username.errors %}
+                    <ul class = "errors">
+                        {% for error in form.username.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.password.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.password(class = "form-control", placeholder = "Enter Password", required = False) }}
+                    {% if form.password.errors %}
+                    <ul class = "errors">
+                        {% for error in form.password.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.first_name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.first_name(class = "form-control", placeholder = "Enter first name", required = False) }}
+                    {% if form.first_name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.first_name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.last_name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.last_name(class = "form-control", placeholder = "Enter Last Name", required = False) }}
+                    {% if form.last_name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.last_name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.email.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.email(class = "form-control", placeholder = "Enter Email", required = False) }}
+                    {% if form.email.errors %}
+                    <ul class = "errors">
+                        {% for error in form.email.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.phone.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.phone(class = "form-control", placeholder = "Enter Phone", required = False) }}
+                    {% if form.phone.errors %}
+                    <ul class = "errors">
+                        {% for error in form.phone.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+            <div class="form-group col-sm-3 mb-3">
+                    {{ form.school_name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.school_name(class = "form-control", placeholder = "Enter school name", required = False) }}
+                    {% if form.school_name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.school_name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.street_name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.street_name(class = "form-control", placeholder = "Enter street name", required = False) }}
+                    {% if form.street_name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.street_name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.street_num.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.street_num(class = "form-control", placeholder = "Enter street number", required = False) }}
+                    {% if form.street_num.errors %}
+                    <ul class = "errors">
+                        {% for error in form.street_num.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.birthdate.label(class = "form-label") }}
+                    {{ form.birthdate(class = "form-control", placeholder = "Enter birthdate", required = False) }}
+                    {% if form.birthdate.errors %}
+                    <ul class = "errors">
+                        {% for error in form.birthdate.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form_s.class_num.label(class = "form-label") }}
+                    {{ form_s.class_num(class = "form-control", placeholder = "Enter Class Number", required = False) }}
+                    {% if form_s.class_num.errors %}
+                    <ul class = "errors">
+                        {% for error in form_s.class_num.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+              <div class="form-group col-sm-3 mb-3">
+                    {{ form_s.class_grade.label(class = "form-label") }}
+                    {{ form_s.class_grade(class = "form-control", placeholder = "Enter Class Grade", required = False) }}
+                    {% if form_s.class_grade.errors %}
+                    <ul class = "errors">
+                        {% for error in form_s.class_grade.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+              <div class="form-group col-sm-3 mb-3">
+                    {{ form_s.class_tier.label(class = "form-label") }}
+                    {{ form_s.class_tier(class = "form-control", placeholder = "Enter Class Tier", required = False) }}
+                    {% if form_s.class_tier.errors %}
+                    <ul class = "errors">
+                        {% for error in form_s.class_tier.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+         {{ form.submit(class = "btn btn-primary") }}
+            </form>
+    </div>
+    </div>
+</div>
+
+
+{% endblock content %}

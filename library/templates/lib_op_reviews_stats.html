@@ -1,0 +1,110 @@
+{% extends "global_layout.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row" id="row">
+    <h1>Users</h1><br>
+    <form class="form-horizontal" name="student-form" method="POST" >
+        <!-- hidden_tag returns the form's security metadata -->
+        {{ form1.hidden_tag() }}
+        <div class="input-group">
+            {{ form1.username.label(class="form-label sr-only") }}
+            <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+            {{ form1.username(class="form-control", placeholder="Search in: Titles, Categories, Authors", required=False) }}
+            <div class="input-group-append">
+                {{ form1.search(class="btn btn-primary") }}
+            </div>
+            {% if form1.username.errors %}
+                <ul class="errors">
+                    {% for error in form1.username.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </form>
+
+            <div class="col-md-12">
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                        {% if uresults|length == 0 %}
+                            <h1 style="margin-top: 5rem;">No Results!</h1>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Average Rating</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for uresult in uresults %}
+                                            <tr>
+                                                <td>{{ uresult.username }}</td>
+                                                <td>{{ uresult.average_rating }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+     <div class="row" id="row">
+    <h1>Category</h1><br>
+    <form class="form-horizontal" name="student-form" method="POST" >
+        <!-- hidden_tag returns the form's security metadata -->
+        {{ form2.hidden_tag() }}
+        <div class="input-group">
+            {{ form2.category.label(class="form-label sr-only") }}
+            <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+            {{ form2.category(class="form-control", placeholder="Search in: Titles, Categories, Authors", required=False) }}
+            <div class="input-group-append">
+                {{ form2.search(class="btn btn-primary") }}
+            </div>
+            {% if form2.category.errors %}
+                <ul class="errors">
+                    {% for error in form2.category.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </form>
+
+            <div class="col-md-12">
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                        {% if cresults|length == 0 %}
+                            <h1 style="margin-top: 5rem;">No Results!</h1>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Average Rating</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for cresult in cresults %}
+                                            <tr>
+                                                <td>{{ cresult.category }}</td>
+                                                <td>{{ cresult.average_rating }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

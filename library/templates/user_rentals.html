@@ -1,0 +1,48 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+<h1>MyRentals®</h1>
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if rentals|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Rentals made yet!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Rental ID</th>
+                                    <th>Book Name</th>
+                                    <th>#Copy</th>
+                                    <th>Rental Date</th>
+                                    <th>Deadline</th>
+                                    <th>Return Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rental in rentals %}
+                                    <tr>
+                                        <td> {{ rental.rental_id }} </td>
+                                        <td> {{ rental.title }} </td>
+                                        <td> {{ rental.copy_id }} </td>
+                                        <td> {{ rental.rental_date }} </td>
+                                        <td> {{ rental.deadline_date }} </td>
+                                        <td> {{ rental.return_date }} </td>
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

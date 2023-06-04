@@ -1,0 +1,157 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if reviews|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Reviews found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Review ID</th>
+                                    <th>Username</th>
+                                    <th>Book Title</th>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <td>Date</td>
+                                    <td>Approved</td>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for review in reviews %}
+                                    <tr>
+                                        <td> {{ review.review_id }} </td>
+                                        <td> {{ review.username }} </td>
+                                        <td> {{ review.title }} </td>
+                                        <td> {{ review.rating }} </td>
+                                        <td>{{ review.comment }}</td>
+                                        <td>{{ review.date }}</td>
+                                        <td>{{ review.approved_by_op }}</td>
+
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#approveModal"
+                                            data-lib_op = "{{ lib_op }}" data-school_id = "{{ school_id }}" data-review_id="{{ review.review_id }}" onclick = "setApproveModalFields(this)">
+<i class="fa-solid fa-check fa-lg"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#disapproveModal"
+                                            data-lib_op = "{{ lib_op }}" data-school_id = "{{ school_id }}" data-review_id="{{ review.review_id }}" onclick = "setDisapproveModalFields(this)">
+<i class="fa-solid fa-xmark fa-lg"></i>
+                                            </button>
+                                        </td>
+                                    <td>
+
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-lib_op = "{{ lib_op }}" data-school_id = "{{ school_id }}" data-review_id="{{ review.review_id }}" onclick = "setDeleteModalFields(this)">
+                                                <i class = "fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Approve modal -->
+<div class = "modal fade" id="approveModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Approve Review</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                You will approve this review. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "approve-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Approve">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Disapprove modal -->
+<div class = "modal fade" id="disapproveModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Disapprove Review</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                You will revoke this review's approval. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "disapprove-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Disapprove">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete Review</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                You will delete this review. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+<script>
+
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/lib_op/delete/review/" + row.getAttribute("data-school_id") + '/' + row.getAttribute("data-lib_op") + '/' + row.getAttribute("data-review_id");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+
+    function setApproveModalFields(row) {
+        document.getElementById("approve-modal-form").action = "/lib_op/approve/review/" + row.getAttribute("data-school_id") + '/' + row.getAttribute("data-lib_op") + '/' + row.getAttribute("data-review_id");
+        document.getElementById("approve-modal-form").method = "POST";
+    }
+
+        function setDisapproveModalFields(row) {
+        document.getElementById("disapprove-modal-form").action = "/lib_op/disapprove/review/" + row.getAttribute("data-school_id") + '/'  + row.getAttribute("data-lib_op") + '/' + row.getAttribute("data-review_id");
+        document.getElementById("disapprove-modal-form").method = "POST";
+    }
+</script>
+{% endblock content %}

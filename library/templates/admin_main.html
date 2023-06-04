@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+</html>{% extends "global_layout.html" %}
+{% block content %}
+    <div><h1>All Hail Admin {{ credentials.first_name }} {{ credentials.last_name }}!</h1></div>
+
+
+    <div class="container" id="row-container">
+        <div class="row" id="row">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Assign Operator</h4>
+                        <p class="card-text paragraph-custom">
+            Choose your partners inside the schools!
+                        </p>
+                        <form  action="/lib_ops/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Insert a School</h4>
+                        <p class="card-text">
+                        Expand Library®'s ecosystem
+                        </p>
+                        <form  action="/admin/school/create/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="row">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">BackUp Database</h4>
+                        <p class="card-text paragraph-custom">
+It's better to be safe than sorry!                        </p>
+                    <form method="get" action="/backup" enctype="multipart/form-data">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+
+                        <h4 class="card-title">Restore Database</h4>
+                        <p class="card-text">
+Break in case of emergency...
+                        </p>
+                    <form method="post" action="/restore" enctype="multipart/form-data">
+                        <input type="file" name="backup_file">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="row-2">
+             <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Statistics</h4>
+                        <p class="card-text">
+Some random statistacs, just to mess with our head                       </p>
+                        <form  action="/admin/statistics/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Show Schools</h4>
+                        <p class="card-text">
+Show all the schools in Library®
+                        <form  action="/admin/schools/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock content %}

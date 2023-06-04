@@ -1,0 +1,50 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+<h1>MyReviews®</h1>
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if reviews|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No Reviews made yet!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Review ID</th>
+                                    <th>Username</th>
+                                    <th>Book</th>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for review in reviews %}
+                                    <tr>
+                                        <td> {{ review.review_id }} </td>
+                                        <td>{{ review.username }}</td>
+                                        <td> {{ review.title }} </td>
+                                        <td> {{ review.rating }} </td>
+                                        <td> {{ review.comment }} </td>
+                                        <td> {{ review.date }} </td>
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,189 @@
+
+
+
+{% extends "global_layout.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="student-form" method="POST">
+                    {{ form.csrf_token }}
+                                        <div class="form-group col-sm-3 mb-3">
+                    {{ form.isbn.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.isbn(class = "form-control", placeholder = "Enter Pages", required = False) }}
+                    {% if form.isbn.errors %}
+                    <ul class = "errors">
+                        {% for error in form.isbn.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                           <div class="form-group col-sm-3 mb-3">
+                    {{ form.title.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.title(class = "form-control", placeholder = "Enter Title", required = True) }}
+                    {% if form.title.errors %}
+                    <ul class = "errors">
+                        {% for error in form.title.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.publisher.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.publisher(class = "form-control", placeholder = "Enter Publisher", required = True) }}
+                    {% if form.publisher.errors %}
+                    <ul class = "errors">
+                        {% for error in form.publisher.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.pages.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.pages(class = "form-control", placeholder = "Enter Pages", required = False) }}
+                    {% if form.pages.errors %}
+                    <ul class = "errors">
+                        {% for error in form.pages.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.summary.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.summary(class = "form-control", placeholder = "Enter Summary", required = False) }}
+                    {% if form.summary.errors %}
+                    <ul class = "errors">
+                        {% for error in form.summary.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                            <div class="form-group col-sm-3 mb-3">
+                    {{ form.image.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.image(class = "form-control", placeholder = "Enter Image", required = False) }}
+                    {% if form.image.errors %}
+                    <ul class = "errors">
+                        {% for error in form.image.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+            <div class="form-group col-sm-3 mb-3">
+                    {{ form.language.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.language(class = "form-control", placeholder = "Enter Language", required = False) }}
+                    {% if form.language.errors %}
+                    <ul class = "errors">
+                        {% for error in form.language.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                         <div class="form-group col-sm-3 mb-3">
+                    {{ form.authors.label(class = "form-label") }}
+                    {{ form.authors() }}
+                </div>
+            <button id="add-author-field">Add Author</button>
+
+                                     <div class="form-group col-sm-3 mb-3">
+                    {{ form.keywords.label(class = "form-label") }}
+                    {{ form.keywords() }}
+                </div>
+            <button id="add-keyword-field">Add Keyword</button>
+
+                         <div class="form-group col-sm-3 mb-3">
+                    {{ form_c.categories.label(class = "form-label") }}
+                    {{ form_c.categories() }}
+                </div>
+<button id="add-category-field">Add Category</button>
+                {{ form.submit(class = "btn btn-primary") }}
+
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        let addCategoryFieldBtn = document.getElementById('add-category-field');
+        addCategoryFieldBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            let allCategoriesFieldWrapper = document.getElementById('categories');
+            let allCategoriesField = allCategoriesFieldWrapper.getElementsByTagName('input');
+            if(allCategoriesField.length > 4) {
+                alert('You can  have only five categories');
+                return;
+            }
+            let categoryInputIds = []
+            for(let i = 0; i < allCategoriesField.length; i++) {
+                categoryInputIds.push(parseInt(allCategoriesField[i].name.split('-')[1]));
+            }
+            let newFieldName = `categories-${Math.max(...categoryInputIds) + 1}`;
+            allCategoriesFieldWrapper.insertAdjacentHTML('beforeend',`
+            <li><label for="${newFieldName}">Category Name</label> <input id="${newFieldName}" name="${newFieldName}" type="text" value=""></li>
+            `);
+        });
+                 let addAuthorFieldBtn = document.getElementById('add-author-field');
+        addAuthorFieldBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            let allAuthorsFieldWrapper = document.getElementById('authors');
+            let allAuthorsField = allAuthorsFieldWrapper.getElementsByTagName('input');
+            if(allAuthorsField.length > 15) {
+                alert('You can have only five authors');
+                return;
+            }
+            let authorInputIds = []
+            for(let i = 0; i < allAuthorsField.length; i++) {
+                authorInputIds.push(parseInt(allAuthorsField[i].name.split('-')[1]));
+            }
+            let newFieldName = `authors-${Math.max(...authorInputIds) + 1}`;
+            allAuthorsFieldWrapper.insertAdjacentHTML('beforeend',`
+            <li>
+                <label for="${newFieldName}-first">Author</label>
+                <input id="${newFieldName}-first" name="${newFieldName}-first" type="text" value="">
+                <input id="${newFieldName}-mid" name="${newFieldName}-mid" type="text" value="">
+                <input id="${newFieldName}-last" name="${newFieldName}-last" type="text" value="">
+            </li>
+            `);
+        });
+         let addKeywordFieldBtn = document.getElementById('add-keyword-field');
+        addKeywordFieldBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            let allKeywordsFieldWrapper = document.getElementById('keywords');
+            let allKeywordsField = allKeywordsFieldWrapper.getElementsByTagName('input');
+            if(allKeywordsField.length > 4) {
+                alert('You can  have only five keywords');
+                return;
+            }
+            let keywordInputIds = []
+            for(let i = 0; i < allKeywordsField.length; i++) {
+                keywordInputIds.push(parseInt(allKeywordsField[i].name.split('-')[1]));
+            }
+            let newFieldName = `keywords-${Math.max(...keywordInputIds) + 1}`;
+            allKeywordsFieldWrapper.insertAdjacentHTML('beforeend',`
+            <li><label for="${newFieldName}">Keyword Name</label> <input id="${newFieldName}" name="${newFieldName}" type="text" value=""></li>
+            `);
+        });
+    }
+</script>
+
+
+{% endblock content %}

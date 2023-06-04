@@ -1,0 +1,86 @@
+{% extends "global_layout.html" %}
+{% block content %}
+    <div><h1>Hello {{ credentials.first_name }} {{ credentials.last_name }}!</h1></div>
+
+    <div class="container" id="row-container">
+
+        <div class="row" id="row">
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">MyRentals®</h4>
+                        <p class="card-text paragraph-custom">
+                            View all of your
+                        </p>
+                        <form  action="/rentals/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Rentals</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">ΜyReservations®</h4>
+                        <p class="card-text">
+                            View all of your
+                        </p>
+                        <form  action="/reservations/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Reservations</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="row-2">
+             <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">ΜyReviews®</h4>
+                        <p class="card-text">
+                            View all of your
+                        </p>
+                        <form  action="/reviews/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Reviews</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">Browse Library®</h4>
+                        <p class="card-text">
+                            View all of the available books in your school and reserve the book of your choice!
+                        </p>
+                         <form action="/books/{{ credentials.username }}/{{ credentials.school_id }}">
+                            <input type="hidden" name="school" value="{{ credentials.school_id }}">
+                                 <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">View</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+          <div class="row" id="row-2">
+             <div class="col-md-6">
+                <div class="card" id="card-container-layout">
+                    <div class="card-body" id="card">
+                        <h4 class="card-title">ΜyData®</h4>
+                        <p class="card-text">
+                            View all of your
+                        </p>
+                        <form  action="/user/data/{{ credentials.username }}">
+                            <input type="hidden" name="username" value="{{ credentials.username }}">
+                            <button class="btn btn-primary" type="submit">Data</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

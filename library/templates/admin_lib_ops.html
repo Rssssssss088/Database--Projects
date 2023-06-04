@@ -1,0 +1,154 @@
+{% extends "global_layout.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if lib_ops|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Operators found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>School Name</th>
+                                    <th>Approved</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lib_op in lib_ops %}
+                                    <tr>
+                                        <td> {{ lib_op.username }} </td>
+                                        <td> {{ lib_op.first_name }} </td>
+                                        <td> {{ lib_op.last_name }} </td>
+                                        <td> {{ lib_op.school_name }} </td>
+                                        <td> {{ lib_op.approved_by_admin }} </td>
+
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#approveModal"
+                                            data-username = "{{ lib_op.username }}" data-admin="{{ admin }}" onclick = "setApproveModalFields(this)">
+<i class="fa-solid fa-check fa-lg"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#disapproveModal"
+                                            data-username = "{{ lib_op.username }}" data-admin="{{ admin }}" onclick = "setDisapproveModalFields(this)">
+<i class="fa-solid fa-xmark fa-lg"></i>
+                                            </button>
+                                        </td>
+                                    <td>
+
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-username = "{{ lib_op.username }}" data-admin="{{ admin }}" onclick = "setDeleteModalFields(this)">
+                                                <i class = "fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Approve modal -->
+<div class = "modal fade" id="approveModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Approve Operator</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                You will give this user operator rights. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "approve-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Approve">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Disapprove modal -->
+<div class = "modal fade" id="disapproveModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Disapprove Operator</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                You will revoke this user's operator rights. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "disapprove-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Disapprove">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete Operator</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                You will delete this operator. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+<script>
+
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/lib_op/delete/" + row.getAttribute("data-admin") + '/' + row.getAttribute("data-username");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+
+    function setApproveModalFields(row) {
+        document.getElementById("approve-modal-form").action = "/lib_op/approve/" + row.getAttribute("data-admin") + '/' + row.getAttribute("data-username");
+        document.getElementById("approve-modal-form").method = "POST";
+    }
+
+        function setDisapproveModalFields(row) {
+        document.getElementById("disapprove-modal-form").action = "/lib_op/disapprove/" + row.getAttribute("data-admin") + '/' +row.getAttribute("data-username");
+        document.getElementById("disapprove-modal-form").method = "POST";
+    }
+</script>
+{% endblock content %}

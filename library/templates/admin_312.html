@@ -1,0 +1,92 @@
+{% extends "global_layout.html" %}
+
+{% block content %}
+    <h1>312</h1><br>
+    <form class="form-horizontal" name="student-form" method="POST" >
+        <!-- hidden_tag returns the form's security metadata -->
+        {{ form.hidden_tag() }}
+                                <div class="form-group col-sm-3 mb-3">
+                    {{ form.categories.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.categories(class = "form-select", placeholder = "Enter school name", required = False) }}
+                    {% if form.categories.errors %}
+                    <ul class = "errors">
+                        {% for error in form.categories.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                    {{ form.search(class="btn btn-primary") }}
+    </form>
+    <div class="container">
+        <div class="row" id="row">
+            <div class="col-md-12">
+                <h1>Authors</h1>
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                        {% if aresults|length == 0 %}
+                            <h1 style="margin-top: 5rem;">No Rentals in Library® Made Yet!</h1>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Author First Name</th>
+                                            <th>Author Middle Name</th>
+                                            <th>Author Last Name</th>
+                                            <th>Category</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for aresult in aresults %}
+                                            <tr>
+                                                <td>{{ aresult.author_first_name }}</td>
+                                                <td>{{ aresult.author_middle_name }}</td>
+                                                <td>{{ aresult.author_last_name }}</td>
+                                                <td>{{ aresult.category }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-12">
+                <h1>Professors Rentals</h1>
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                        {% if bresults|length == 0 %}
+                            <h1 style="margin-top: 5rem;">No Rentals in Library® Made Yet!</h1>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Professor First Name</th>
+                                            <th>Professor Last Name</th>
+                                            <th>Category</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for bresult in bresults %}
+                                            <tr>
+                                                <td>{{ bresult.username }}</td>
+                                                <td>{{ bresult.first_name }}</td>
+                                                <td>{{ bresult.last_name }}</td>
+                                                <td>{{ bresult.category }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

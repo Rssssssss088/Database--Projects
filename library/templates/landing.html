@@ -1,0 +1,31 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" id="row-container">
+        <div class="row" id="row">
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">SignUp</h4>
+                    <p class="card-text paragraph-custom">
+                        Sign up to use all the Library© privileges
+                    </p>
+                    <a class="btn btn-primary" href="/professor/create">Professor</a>
+                    <a class="btn btn-primary" href="/student/create">Student</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Login</h4>
+                    <p class="card-text">
+                        Login to gain access to your Library© privileges
+                    </p>
+                    <a class="btn btn-primary  " href="/user/login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
