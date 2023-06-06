@@ -33,7 +33,7 @@ def LibReviews(school_id, lib_op):
 
     try:
         cur = db.connection.cursor()
-        cur.execute("SELECT r.review_id, b.title, r.rating, r.comment, r.date, r.approved_by_op FROM reviews r join books b on b.isbn=r.isbn join user u on u.username=r.username where u.school_id='{}' order by r.approved_by_op DESC, r.review_id DESC ;".format(school_id))
+        cur.execute("SELECT r.review_id, r.username, b.title, r.rating, r.comment, r.date, r.approved_by_op FROM reviews r join books b on b.isbn=r.isbn join user u on u.username=r.username where u.school_id='{}' order by r.approved_by_op DESC, r.review_id DESC ;".format(school_id))
         column_names = [i[0] for i in cur.description]
         reviews = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
         cur.close()
