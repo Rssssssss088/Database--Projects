@@ -1,7 +1,6 @@
 ## This file is ran automatically the first time a Python program imports the package library
 from flask import Flask
 from flask_mysqldb import MySQL
-from library.grade import grade
 from library.user import user
 from library.books import books
 from library.school_units import school_units
@@ -60,7 +59,6 @@ from library.admins import routes
 from library.lib_ops import routes
 from library.copies import routes
 
-from library.grade import routes
 
 
 
